@@ -159,9 +159,10 @@ Shamelessly stolen from go-mode (https://github.com/dominikh/go-mode.el)"
 
           (run-hooks 'erlang-format-hook)
 
+          (setq our-erlfmt-args (append our-erlfmt-args (list tmpfile)))
+
           (when erlfmt-args
             (setq our-erlfmt-args (append our-erlfmt-args erlfmt-args)))
-          (setq our-erlfmt-args (append our-erlfmt-args (list tmpfile)))
 
           (if (zerop (apply #'call-process erlfmt-erlang-ls nil errbuff t our-erlfmt-args))
               (progn
@@ -182,7 +183,7 @@ Shamelessly stolen from go-mode (https://github.com/dominikh/go-mode.el)"
                   (display-buffer errbuff)
                 (message "erlang-format failed: see %s" (buffer-name errbuff)))))
 
-          ;;(delete-file tmpfile)
+          (delete-file tmpfile)
           (kill-buffer outbuff)))))
 
 (provide 'erlang-format)
